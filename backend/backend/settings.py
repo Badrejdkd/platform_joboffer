@@ -66,6 +66,7 @@ TEMPLATES = [
         },
     },
 ]
+AUTH_USER_MODEL = 'base.JobSeeker'  # ou 'tonapp.Recruiter' si tu veux l'utiliser aussi
 
 WSGI_APPLICATION = 'backend.wsgi.application'
 
@@ -78,7 +79,7 @@ DATABASES = {
         'ENGINE' : 'django.db.backends.mysql',
         'NAME' : 'jobRadarDB',
         'USER' : 'root',
-        'PASSWORD' : '1234',
+        'PASSWORD' : '',
         'HOST' : 'localhost',
         'PORT' : '3306',
         'OPTIONS': {

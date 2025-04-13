@@ -4,6 +4,48 @@ from django import forms
 from django.core.exceptions import ValidationError
 
 from . import models
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth import get_user_model
+
+from django import forms
+from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth import get_user_model
+
+User = get_user_model()
+from django import forms
+from django.contrib.auth import authenticate
+
+from django import forms
+
+class LoginForm(forms.Form):
+    email = forms.EmailField(label="Adresse email", max_length=191, widget=forms.EmailInput(attrs={'class': 'form-control'}))
+    password = forms.CharField(label="Mot de passe", widget=forms.PasswordInput(attrs={'class': 'form-control'}))
+
+
+    def clean(self):
+        cleaned_data = super().clean()
+        email = cleaned_data.get('email')
+        password = cleaned_data.get('password')
+
+        if email and password:
+            user = authenticate(email=email, password=password)
+            if not user:
+                raise forms.ValidationError("Email ou mot de passe invalide.")
+            cleaned_data['user'] = user  # Pour le récupérer plus tard dans la vue
+        return cleaned_data
+
+class CustomAuthenticationForm(AuthenticationForm):
+    username = forms.EmailField(
+        label='Email',
+        widget=forms.EmailInput(attrs={'autofocus': True, 'class': 'form-control'})
+    )
+
+    def confirm_login_allowed(self, user):
+        # Tu peux ajouter des vérifications personnalisées ici
+        return super().confirm_login_allowed(user)
+
+
+
 
 class CreateUser(forms.ModelForm):
     USER_TYPES = [

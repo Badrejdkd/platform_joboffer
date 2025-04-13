@@ -1,0 +1,26 @@
+@startuml
+|Joueur|
+start
+:Entrer la case de départ;
+:Entrer la case d'arrivée;
+
+|Partie|
+:Vérifier que la case d'arrivée est valide;
+:Vérifier si une promotion est possible;
+
+|Pion|
+:Vérifier la validité du déplacement;
+
+|Partie|
+:Vérifier les règles générales (échec, tour de jeu...);
+if (Déplacement et règles valides ?) then (oui)
+  |Joueur|
+  :Choisir la pièce de promotion;
+  |Partie|
+  :Remplacer le pion par la pièce choisie;
+  stop
+else (non)
+  :Refuser le coup;
+  stop
+endif
+@enduml
